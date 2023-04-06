@@ -254,6 +254,8 @@ oauth2_refresh_start(const struct oauth2_settings *set,
 	http_url_escape_param(payload, input->token);
 	str_append(payload, "&client_id=");
 	http_url_escape_param(payload, set->client_id);
+	str_append(payload, "&user=");
+	http_url_escape_param(payload, input->user);
 
 	return oauth2_request_start(set, input, callback, context, NULL,
 				    "POST", set->refresh_url, NULL, FALSE);
@@ -280,6 +282,8 @@ oauth2_introspection_start(const struct oauth2_settings *set,
 		http_url_escape_param(enc, set->client_id);
 		str_append(enc, "&client_secret=");
 		http_url_escape_param(enc, set->client_secret);
+		str_append(enc, "&user=");
+		http_url_escape_param(enc, input->user);
 		url = str_c(enc);
 		method = "GET";
 		break;
@@ -296,6 +300,8 @@ oauth2_introspection_start(const struct oauth2_settings *set,
 		http_url_escape_param(payload, set->client_id);
 		str_append(payload, "&client_secret=");
 		http_url_escape_param(payload, set->client_secret);
+		str_append(payload, "&user=");
+		http_url_escape_param(payload, input->user);
 		url = set->introspection_url;
 		method = "POST";
 		break;

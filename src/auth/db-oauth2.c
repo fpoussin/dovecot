@@ -691,6 +691,7 @@ static void db_oauth2_lookup_introspect(struct db_oauth2_request *req)
 		"Making introspection request to %s",
 		req->db->set.introspection_url);
 	input.token = req->token;
+	input.user = req->auth_request->fields.original_username;
 	input.local_ip = req->auth_request->fields.local_ip;
 	input.local_port = req->auth_request->fields.local_port;
 	input.remote_ip = req->auth_request->fields.remote_ip;
@@ -836,6 +837,7 @@ void db_oauth2_lookup(struct db_oauth2 *db, struct db_oauth2_request *req,
 	req->auth_request = request;
 
 	input.token = token;
+	input.user = req->auth_request->fields.original_username;
 	input.local_ip = req->auth_request->fields.local_ip;
 	input.local_port = req->auth_request->fields.local_port;
 	input.remote_ip = req->auth_request->fields.remote_ip;
